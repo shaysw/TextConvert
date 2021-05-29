@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextConvert", "TextConvert\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextConvertTests", "TextConvertTests\TextConvertTests.csproj", "{185EA941-B72C-4BCB-B0C3-64EB1263ED24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextConvertApp", "TextConvertApp\TextConvertApp.csproj", "{9F02A677-3E23-464B-A7F4-ECD6068B7639}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{185EA941-B72C-4BCB-B0C3-64EB1263ED24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{185EA941-B72C-4BCB-B0C3-64EB1263ED24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{185EA941-B72C-4BCB-B0C3-64EB1263ED24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F02A677-3E23-464B-A7F4-ECD6068B7639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F02A677-3E23-464B-A7F4-ECD6068B7639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F02A677-3E23-464B-A7F4-ECD6068B7639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F02A677-3E23-464B-A7F4-ECD6068B7639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
