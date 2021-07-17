@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,10 +38,16 @@ namespace TextConvertWebApp
                 app.UseDeveloperExceptionPage();
             }
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+	
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

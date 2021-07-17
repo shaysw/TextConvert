@@ -16,6 +16,8 @@ namespace TextConvertWebApp.Controllers
         [HttpGet("{englishInputString}")]
         public string Get(string englishInputString)
         {
+            _logger.LogError($"!!!!!!! {englishInputString}");
+            System.Console.WriteLine($"!!!!!!! {englishInputString}");
             return TextConvert.Hebrew.ConvertEnglishToHebrew(englishInputString);
         }
     }

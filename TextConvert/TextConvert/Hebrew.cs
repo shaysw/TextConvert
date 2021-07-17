@@ -48,6 +48,7 @@
 
         public static string ConvertEnglishToHebrew(string englishString)
         {
+            System.Console.WriteLine($"???? {englishString}");
             var hebrewStringBuilder = new StringBuilder();
             englishString.ToList().ForEach(englishChar => hebrewStringBuilder.Append(EnglishCharsToHebrewChars.TryGetValue(char.ToLower(englishChar), out var hebrewChar) ? hebrewChar : englishChar));
         
