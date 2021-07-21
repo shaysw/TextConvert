@@ -3,7 +3,7 @@
 namespace TextConvertTests
 {
     [TestClass]
-    public class HebrewTests
+    public class EnglishToHebrewTests
     {
         [TestMethod]
         public void TestSingleCharLowerCaseConvert()
@@ -37,6 +37,15 @@ namespace TextConvertTests
         {
             var englishInput = "ABCDEFG asd 1223$%^^$";
             var hebrewOutput = "שנבגקכע שדג 1223$%^^$";
+
+            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+        }
+
+        [TestMethod]
+        public void TestMultipleWordsWithQuestionMarkConvert()
+        {
+            var englishInput = "AKUO kl nv vnmc?";
+            var hebrewOutput = "שלום לך מה המצב?";
 
             Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
         }
