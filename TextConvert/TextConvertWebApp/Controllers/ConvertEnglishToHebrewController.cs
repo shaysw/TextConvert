@@ -23,8 +23,7 @@ namespace TextConvertWebApp.Controllers
             var sourceLanguage = convertTextRequest.SourceLanguage;
             var targetLanguage = convertTextRequest.TargetLanguage;
             var stringToConvert = convertTextRequest.StringToConvert;
-
-            _logger.LogInformation($"Converting '{stringToConvert}' from {sourceLanguage} to {targetLanguage}");
+            string convertedString = string.Empty;
 
             switch (sourceLanguage)
             {
@@ -32,13 +31,20 @@ namespace TextConvertWebApp.Controllers
                     switch (targetLanguage)
                     {
                         case ConvertTextRequest.Language.Hebrew:
-                            return TextConvert.Hebrew.ConvertEnglishToHebrew(convertTextRequest.StringToConvert);
+                            convertedString = TextConvert.Hebrew.ConvertEnglishToHebrew(convertTextRequest.StringToConvert);
+                            break;
                         default:
-                            return null;
+                            convertedString = null;
+                            break;
                     }
+                    break;
                 default:
-                    return null;
+                    convertedString = null;
+                    break;
             }
+
+            _logger.LogInformation($"{stringToConvert}({sourceLanguage}) -> {convertedString}({targetLanguage})");
+            return convertedString;
         }
     }
 }

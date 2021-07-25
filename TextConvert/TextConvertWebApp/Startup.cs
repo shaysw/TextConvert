@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TextConvertWebApp
 {
@@ -43,6 +44,7 @@ namespace TextConvertWebApp
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
