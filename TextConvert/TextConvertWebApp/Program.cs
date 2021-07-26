@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -7,9 +6,7 @@ using Serilog;
 using Serilog.Events;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace TextConvertWebApp
 {
@@ -20,8 +17,7 @@ namespace TextConvertWebApp
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
-            .WriteTo.Console().WriteTo.File(
-                @".\LogFiles\TextConvert.log",
+            .WriteTo.Console().WriteTo.File(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs/TextConvert.log"),
                 fileSizeLimitBytes: 1_000_000,
                 rollOnFileSizeLimit: true,
                 shared: true,
