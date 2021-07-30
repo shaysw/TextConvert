@@ -23,7 +23,7 @@ namespace TextConvertWebApp.Controllers
             var sourceLanguage = convertTextRequest.SourceLanguage;
             var targetLanguage = convertTextRequest.TargetLanguage;
             var stringToConvert = convertTextRequest.StringToConvert;
-            string convertedString = "<NULL>";
+            string convertedString = $"Converting from  {sourceLanguage} to {targetLanguage} currently not supported";
 
             var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4();
 
@@ -34,6 +34,22 @@ namespace TextConvertWebApp.Controllers
                     {
                         case ConvertTextRequest.Language.Hebrew:
                             convertedString = TextConvert.Hebrew.ConvertEnglishToHebrew(convertTextRequest.StringToConvert);
+                            break;
+                        case ConvertTextRequest.Language.English:
+                            convertedString = convertTextRequest.StringToConvert;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case ConvertTextRequest.Language.Hebrew:
+                    switch (targetLanguage)
+                    {
+                        case ConvertTextRequest.Language.English:
+                            convertedString = TextConvert.Hebrew.ConvertHebrewToEnglish(convertTextRequest.StringToConvert);
+                            break;
+                        case ConvertTextRequest.Language.Hebrew:
+                            convertedString = convertTextRequest.StringToConvert;
                             break;
                         default:
                             break;
