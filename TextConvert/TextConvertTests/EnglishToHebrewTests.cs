@@ -1,17 +1,21 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TextConvert;
+
 namespace TextConvertTests
 {
     [TestClass]
     public class EnglishToHebrewTests
     {
+        private Hebrew _hebrew = new Hebrew();
+
         [TestMethod]
         public void TestSingleCharLowerCaseConvert()
         {
             var englishInput = "a";
             var hebrewOutput = "ש";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+            Assert.AreEqual(_hebrew.ConvertEnglishQwertyStringToConvertibleKeyboardLayout(englishInput), hebrewOutput);
         }
 
         [TestMethod]
@@ -20,7 +24,7 @@ namespace TextConvertTests
             var englishInput = "A";
             var hebrewOutput = "ש";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+            Assert.AreEqual(_hebrew.ConvertEnglishQwertyStringToConvertibleKeyboardLayout(englishInput), hebrewOutput);
         }
 
         [TestMethod]
@@ -29,7 +33,7 @@ namespace TextConvertTests
             var englishInput = "ABCDEFG";
             var hebrewOutput = "שנבגקכע";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+            Assert.AreEqual(_hebrew.ConvertEnglishQwertyStringToConvertibleKeyboardLayout(englishInput), hebrewOutput);
         }
 
         [TestMethod]
@@ -38,7 +42,7 @@ namespace TextConvertTests
             var englishInput = "ABCDEFG asd 1223$%^^$";
             var hebrewOutput = "שנבגקכע שדג 1223$%^^$";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+            Assert.AreEqual(_hebrew.ConvertEnglishQwertyStringToConvertibleKeyboardLayout(englishInput), hebrewOutput);
         }
 
         [TestMethod]
@@ -47,7 +51,7 @@ namespace TextConvertTests
             var englishInput = "AKUO kl nv vnmc?";
             var hebrewOutput = "שלום לך מה המצב?";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertEnglishToHebrew(englishInput), hebrewOutput);
+            Assert.AreEqual(_hebrew.ConvertEnglishQwertyStringToConvertibleKeyboardLayout(englishInput), hebrewOutput);
         }
     }
 }
