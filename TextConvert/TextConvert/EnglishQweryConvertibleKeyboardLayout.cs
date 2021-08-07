@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -8,10 +11,14 @@ namespace TextConvert
     {
         private EnglishQwertyCharsToConvertibleKeyboardLayoutMapping _englishQwertyCharsToConvertibleKeyboardLayoutMapping;
 
-        public EnglishQweryConvertibleKeyboardLayout(Dictionary<char, char> englishQwertyCharsToConvertibleKeyboardLayoutDictionary)
+        public EnglishQweryConvertibleKeyboardLayout(string keyboardLayoutMappingsFilePath)
         {
+            var KeyboardLayoutMappingsFile = File.ReadAllText(keyboardLayoutMappingsFilePath);
+            var englishQwertyCharsToConvertibleKeyboardLayoutDictionary = JsonConvert.DeserializeObject<Dictionary<char, char>>(KeyboardLayoutMappingsFile);
+           
             _englishQwertyCharsToConvertibleKeyboardLayoutMapping = new EnglishQwertyCharsToConvertibleKeyboardLayoutMapping(englishQwertyCharsToConvertibleKeyboardLayoutDictionary);
-        } 
+        }
+
 
         public string ConvertEnglishQwertyStringToConvertibleKeyboardLayout(string englishQwertyString)
         {

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TextConvert
 {
@@ -10,7 +13,7 @@ namespace TextConvert
 
         public EnglishQwertyCharsToConvertibleKeyboardLayoutMapping(Dictionary<char, char> englishQwertyCharsToConvertibleKeyboardLayoutDictionary)
         {
-            this._englishQwertyCharsToConvertibleKeyboardLayoutDictionary = englishQwertyCharsToConvertibleKeyboardLayoutDictionary;
+            _englishQwertyCharsToConvertibleKeyboardLayoutDictionary = englishQwertyCharsToConvertibleKeyboardLayoutDictionary;
             this._convertibleKeyboardLayoutCharsToEnglishQwertyDictionary = ReverseDictionary(englishQwertyCharsToConvertibleKeyboardLayoutDictionary);
         }
 
