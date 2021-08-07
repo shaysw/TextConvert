@@ -1,17 +1,21 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TextConvert;
+
 namespace TextConvertTests
 {
     [TestClass]
-    public class HebrewToEnglisTests
+    public class HebrewToEnglishTests
     {
+        private Hebrew _hebrew = new Hebrew();
+
         [TestMethod]
         public void TestSingleCharLowerCaseConvert()
         {
             var hebrewInput = "ש";
             var englishOutput = "a";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertHebrewToEnglish(hebrewInput), englishOutput);
+            Assert.AreEqual(_hebrew.ConvertConvertibleKeyboardLayoutToEnglishQwertyString(hebrewInput), englishOutput);
         }
 
         [TestMethod]
@@ -20,7 +24,7 @@ namespace TextConvertTests
             var hebrewInput = "שנבגקכע";
             var englishOutput = "abcdefg";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertHebrewToEnglish(hebrewInput), englishOutput);
+            Assert.AreEqual(_hebrew.ConvertConvertibleKeyboardLayoutToEnglishQwertyString(hebrewInput), englishOutput);
         }
 
         [TestMethod]
@@ -29,7 +33,7 @@ namespace TextConvertTests
             var hebrewInput = "שנבגקכע שדג 1223$%^^$";
             var englishOutput = "abcdefg asd 1223$%^^$";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertHebrewToEnglish(hebrewInput), englishOutput);
+            Assert.AreEqual(_hebrew.ConvertConvertibleKeyboardLayoutToEnglishQwertyString(hebrewInput), englishOutput);
         }
 
         [TestMethod]
@@ -38,7 +42,7 @@ namespace TextConvertTests
             var hebrewInput = "שלום לך מה המצב?";
             var englishOutput = "akuo kl nv vnmc?";
 
-            Assert.AreEqual(TextConvert.Hebrew.ConvertHebrewToEnglish(hebrewInput), englishOutput);
+            Assert.AreEqual(_hebrew.ConvertConvertibleKeyboardLayoutToEnglishQwertyString(hebrewInput), englishOutput);
         }
     }
 }
