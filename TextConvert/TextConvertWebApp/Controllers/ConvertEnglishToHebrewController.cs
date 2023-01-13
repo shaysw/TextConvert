@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
-using Newtonsoft.Json;
-
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -71,13 +68,26 @@ namespace TextConvertWebApp.Controllers
 
             var message = $"[{remoteIpAddress}] : {stringToConvert}({sourceLanguage}) -> {convertedString}({targetLanguage})";
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, EventServerLogMessage.eventServerUrl);
-            request.Content = new StringContent(new EventServerLogMessage(message).ToString(),
-                                                Encoding.UTF8,
-                                                "application/json");
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, EventServerLogMessage.eventServerUrl);
+                request.Content = new StringContent(new EventServerLogMessage(message).ToString(),
+                                                    Encoding.UTF8,
+                                                    "application/json");//CONTENT-TYPE header
 
-            await _httpClient.SendAsync(request);
-            _logger.LogInformation(message);
+                await _httpClient.SendAsync(request)
+                    .ContinueWith(responseTask =>
+                    {
+                        Console.WriteLine("Response: {0}", responseTask.Result);
+                    });
+
+                _logger.LogInformation(message);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Could not perform logging to event server : {0}", exception.Message);
+            }
+            
             return convertedString;
         }
 
