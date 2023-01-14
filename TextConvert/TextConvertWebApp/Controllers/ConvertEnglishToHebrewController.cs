@@ -90,7 +90,6 @@ namespace TextConvertWebApp.Controllers
             catch (Exception exception)
             {
                 Console.WriteLine("Error converting string : {0}", exception.Message);
-                return exception.Message;
             }
 
         }
