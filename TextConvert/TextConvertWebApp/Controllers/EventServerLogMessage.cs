@@ -4,7 +4,7 @@ namespace TextConvertWebApp.Controllers
 {
     internal class EventServerLogMessage
     {
-        public static string eventServerUrl = "http://127.0.0.1:8000/EventServer/audit_log/post_event";
+        public static string eventServerUrl = "https://shayschwartzburd.com/EventServer/audit_log/post_event";
 
         [JsonProperty("sender")]
         public const string sender = "TextConverter";
