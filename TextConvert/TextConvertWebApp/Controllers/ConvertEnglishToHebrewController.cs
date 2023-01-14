@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -23,7 +22,7 @@ namespace TextConvertWebApp.Controllers
         {
             { Language.Hebrew, new Hebrew() }
         };
-
+        
 
         public ConvertTextApiController(ILogger<ConvertTextApiController> logger)
         {
@@ -34,44 +33,43 @@ namespace TextConvertWebApp.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> ConvertTextAsync(ConvertTextRequest convertTextRequest)
         {
-            try
-            {
-                var sourceLanguage = convertTextRequest.SourceLanguage;
-                var targetLanguage = convertTextRequest.TargetLanguage;
-                var stringToConvert = convertTextRequest.StringToConvert;
-                var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4();
-                string convertedString;
+            var sourceLanguage = convertTextRequest.SourceLanguage;
+            var targetLanguage = convertTextRequest.TargetLanguage;
+            var stringToConvert = convertTextRequest.StringToConvert;
+            var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4();
+            string convertedString;
 
-                // TODO: not sure this is the best approach, for example, eng to eng but hebrew input string (remains hebrew)
-                if (sourceLanguage == targetLanguage)
+            // TODO: not sure this is the best approach, for example, eng to eng but hebrew input string (remains hebrew)
+            if (sourceLanguage == targetLanguage)
+            {
+                convertedString = stringToConvert;
+            }
+            else
+            {
+                // TODO: handle conversions between 2 languages which are not engllish
+                if (sourceLanguage == Language.English)
                 {
-                    convertedString = stringToConvert;
+                    if (!_convertibleKeyboardLayouts.ContainsKey(targetLanguage))
+                    {
+                        throw new Exception($"Mapping for {targetLanguage} not found");
+                    }
+                    convertedString = _convertibleKeyboardLayouts[targetLanguage].ConvertEnglishQwertyStringToConvertibleKeyboardLayout(stringToConvert);
                 }
                 else
+                // TODO: implicitly assuming target is english
                 {
-                    // TODO: handle conversions between 2 languages which are not engllish
-                    if (sourceLanguage == Language.English)
+                    if (!_convertibleKeyboardLayouts.ContainsKey(sourceLanguage))
                     {
-                        if (!_convertibleKeyboardLayouts.ContainsKey(targetLanguage))
-                        {
-                            throw new Exception($"Mapping for {targetLanguage} not found");
-                        }
-                        convertedString = _convertibleKeyboardLayouts[targetLanguage].ConvertEnglishQwertyStringToConvertibleKeyboardLayout(stringToConvert);
+                        throw new Exception($"Mapping for {sourceLanguage} not found");
                     }
-                    else
-                    // TODO: implicitly assuming target is english
-                    {
-                        if (!_convertibleKeyboardLayouts.ContainsKey(sourceLanguage))
-                        {
-                            throw new Exception($"Mapping for {sourceLanguage} not found");
-                        }
-                        convertedString = _convertibleKeyboardLayouts[sourceLanguage].ConvertConvertibleKeyboardLayoutToEnglishQwertyString(stringToConvert);
-                    }
+                    convertedString = _convertibleKeyboardLayouts[sourceLanguage].ConvertConvertibleKeyboardLayoutToEnglishQwertyString(stringToConvert);
                 }
+            }
 
-                var message = $"[{remoteIpAddress}] : {stringToConvert}({sourceLanguage}) -> {convertedString}({targetLanguage})";
+            var message = $"[{remoteIpAddress}] : {stringToConvert}({sourceLanguage}) -> {convertedString}({targetLanguage})";
 
-
+            try
+            {
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, EventServerLogMessage.eventServerUrl);
                 request.Content = new StringContent(new EventServerLogMessage(message).ToString(),
                                                     Encoding.UTF8,
@@ -84,14 +82,13 @@ namespace TextConvertWebApp.Controllers
                     });
 
                 _logger.LogInformation(message);
-                
-                return convertedString;
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Error converting string : {0}", exception.Message);
+                Console.WriteLine("Could not perform logging to event server : {0}", exception.Message);
             }
-
+            
+            return convertedString;
         }
 
     }
